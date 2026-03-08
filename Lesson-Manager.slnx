@@ -3,6 +3,7 @@
     <File Path=".gitignore" />
   </Folder>
   <Project Path="ConsoleApp/ConsoleApp.csproj" />
+  <Project Path="LessonManager.WPF/WPF.csproj" Id="0b460e46-54c3-4454-864f-87f8ee58f285" />
   <Project Path="Models/Models.csproj" />
   <Project Path="Services/Services.csproj" />
   <Project Path="Views/Views.csproj" />

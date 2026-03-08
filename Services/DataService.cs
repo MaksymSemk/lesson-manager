@@ -1,9 +1,8 @@
-﻿using LessonManager.Models;
-using LessonManager.Views;
+﻿using LessonManager.Views;
 
 namespace LessonManager.Services;
 
-public class DataService
+public class DataService : IDataService
 {
     public List<SubjectView> GetAllSubjects()
     {
