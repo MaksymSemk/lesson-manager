@@ -13,12 +13,10 @@
             <TextBlock Text="Навчальні предмети" FontSize="26" FontWeight="Bold" Margin="0,0,0,20" Foreground="#2D3E50"/>
 
             <ListBox x:Name="SubjectsList" 
-                 Height="300" 
-                 FontSize="18" 
-                 DisplayMemberPath="BaseSubject.Title" 
-                 SelectionChanged="SubjectsList_SelectionChanged"
-                 BorderThickness="1"
-                 BorderBrush="#D1D1D1"/>
+         ItemsSource="{Binding Subjects}" 
+         DisplayMemberPath="BaseSubject.Title" 
+         SelectionChanged="SubjectsList_SelectionChanged"
+         FontSize="18" Height="300"/>
         </StackPanel>
     </Grid>
 </Page>

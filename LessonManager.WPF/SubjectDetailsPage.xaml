@@ -3,20 +3,19 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       Title="Деталі предмета">
     <Grid Margin="20">
-        <StackPanel>
+        <StackPanel Margin="20">
             <Button Content="← Назад" Click="Back_Click" HorizontalAlignment="Left" Padding="10,5" Margin="0,0,0,20"/>
 
-            <TextBlock x:Name="TxtTitle" FontSize="28" FontWeight="Bold" Margin="0,0,0,10"/>
-            <TextBlock x:Name="TxtInfo" FontSize="16" Margin="0,0,0,20"/>
+            <TextBlock Text="{Binding Subject.BaseSubject.Title}" FontSize="28" FontWeight="Bold" Margin="0,0,0,10"/>
+            <TextBlock Text="{Binding Subject.BaseSubject.Area, StringFormat='Сфера: {0}'}" FontSize="16"/>
+            <TextBlock Text="{Binding Subject.BaseSubject.EctsCredits, StringFormat='Кредити ECTS: {0}'}" FontSize="16" Margin="0,5,0,20"/>
 
             <TextBlock Text="Список занять:" FontSize="20" FontWeight="SemiBold" Margin="0,0,0,10"/>
-            <ListBox x:Name="LessonsList" Height="200" SelectionChanged="LessonsList_SelectionChanged">
+
+            <ListBox ItemsSource="{Binding Lessons}" Height="200" SelectionChanged="LessonsList_SelectionChanged">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal" Margin="5">
-                            <TextBlock Text="{Binding BaseLesson.Date, StringFormat=dd.MM}" FontWeight="Bold" Width="50"/>
-                            <TextBlock Text="{Binding BaseLesson.Topic}"/>
-                        </StackPanel>
+                        <TextBlock Text="{Binding BaseLesson.Topic}" Margin="5"/>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>

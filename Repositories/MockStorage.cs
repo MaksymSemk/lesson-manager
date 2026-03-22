@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using LessonManager.Models;
 using LessonManager.Models.Enums;
 
-namespace LessonManager.Repositores;
+namespace LessonManager.Services;
 
-public static class MockStorage
+internal static class MockStorage
 {
     public static List<Subject> Subjects = new();
     public static List<Lesson> Lessons = new();

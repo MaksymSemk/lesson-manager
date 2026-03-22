@@ -2,9 +2,10 @@
   <Folder Name="/Solution Items/">
     <File Path=".gitignore" />
   </Folder>
-  <Project Path="ConsoleApp/ConsoleApp.csproj" />
   <Project Path="LessonManager.WPF/WPF.csproj" Id="0b460e46-54c3-4454-864f-87f8ee58f285" />
   <Project Path="Models/Models.csproj" />
+  <Project Path="Repositories/Repositories.csproj" Id="73f02dfd-b457-4f02-bf91-373cff68955f" />
   <Project Path="Services/Services.csproj" />
+  <Project Path="ViewModels/ViewModels.csproj" Id="8473808d-016a-4b49-b4b8-e830199ec33e" />
   <Project Path="Views/Views.csproj" />
 </Solution>

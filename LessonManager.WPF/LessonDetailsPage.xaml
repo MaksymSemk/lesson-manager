@@ -8,16 +8,17 @@
 
             <TextBlock Text="Детальна інформація про заняття" FontSize="24" FontWeight="Bold" Margin="0,0,0,20" Foreground="#2D3E50"/>
 
-            <Border BorderBrush="#D1D1D1" BorderThickness="1" Padding="20" CornerRadius="5" Background="#F9F9F9">
+            <Border BorderBrush="#D1D1D1" BorderThickness="1" Padding="20" Background="#F9F9F9">
                 <StackPanel>
-                    <TextBlock x:Name="TxtTopic" FontSize="20" FontWeight="SemiBold" Margin="0,0,0,10"/>
-                    <TextBlock x:Name="TxtType" FontSize="16" Margin="0,5"/>
-                    <TextBlock x:Name="TxtDate" FontSize="16" Margin="0,5"/>
-                    <TextBlock x:Name="TxtTime" FontSize="16" Margin="0,5"/>
+                    <TextBlock Text="{Binding Lesson.BaseLesson.Topic, StringFormat='Тема: {0}'}" FontSize="20" FontWeight="Bold"/>
+                    <TextBlock Text="{Binding Lesson.BaseLesson.Type, StringFormat='Тип: {0}'}" FontSize="16" Margin="0,5"/>
+                    <TextBlock Text="{Binding Lesson.BaseLesson.Date, StringFormat='Дата: {0:dd.MM.yyyy}'}" FontSize="16"/>
+                    <TextBlock Text="{Binding Lesson.BaseLesson.StartTime, StringFormat='Початок: {0}'}" FontSize="16"/>
 
                     <Separator Margin="0,15"/>
 
-                    <TextBlock x:Name="TxtDuration" FontSize="18" FontWeight="Bold" Foreground="Green"/>
+                    <TextBlock Text="{Binding Lesson.Duration, StringFormat='Тривалість: {0:hh\\:mm}'}" 
+                   FontSize="18" FontWeight="Bold" Foreground="Green"/>
                 </StackPanel>
             </Border>
         </StackPanel>

@@ -1,6 +1,9 @@
-﻿using System.Windows;
-using Microsoft.Extensions.DependencyInjection;
+﻿using LessonManager.Repositories;
+using LessonManager.Repositories.Interfaces;
 using LessonManager.Services;
+using Microsoft.Extensions.DependencyInjection;
+using System.Windows;
+using LessonManager.ViewModels;
 
 namespace LessonManager.WPF
 {
@@ -18,7 +21,14 @@ namespace LessonManager.WPF
 
         private void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<ISubjectRepository, MockSubjectRepository>();
+            services.AddSingleton<ILessonRepository, MockLessonRepository>();
+
             services.AddSingleton<IDataService, DataService>();
+
+            services.AddTransient<SubjectsListViewModel>();
+            services.AddTransient<SubjectDetailsViewModel>();
+            services.AddTransient<LessonDetailsViewModel>();
 
             services.AddSingleton<MainWindow>();
         }
