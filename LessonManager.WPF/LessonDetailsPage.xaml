@@ -1,26 +1,98 @@
 ﻿<Page x:Class="LessonManager.WPF.LessonDetailsPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="clr-namespace:LessonManager.WPF"
       Title="Деталі заняття">
-    <Grid Margin="20">
-        <StackPanel>
-            <Button Content="← Назад до предмета" Click="Back_Click" HorizontalAlignment="Left" Padding="10,5" Margin="0,0,0,20"/>
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-            <TextBlock Text="Детальна інформація про заняття" FontSize="24" FontWeight="Bold" Margin="0,0,0,20" Foreground="#2D3E50"/>
+            <!-- Back button -->
+            <Button Grid.Row="0" 
+                    Content="← Назад до предмета" 
+                    Click="Back_Click" 
+                    HorizontalAlignment="Left" 
+                    Padding="10,5" 
+                    Margin="0,0,0,20"
+                    Background="#95A5A6"
+                    Foreground="White"/>
 
-            <Border BorderBrush="#D1D1D1" BorderThickness="1" Padding="20" Background="#F9F9F9">
-                <StackPanel>
-                    <TextBlock Text="{Binding Lesson.BaseLesson.Topic, StringFormat='Тема: {0}'}" FontSize="20" FontWeight="Bold"/>
-                    <TextBlock Text="{Binding Lesson.BaseLesson.Type, StringFormat='Тип: {0}'}" FontSize="16" Margin="0,5"/>
-                    <TextBlock Text="{Binding Lesson.BaseLesson.Date, StringFormat='Дата: {0:dd.MM.yyyy}'}" FontSize="16"/>
-                    <TextBlock Text="{Binding Lesson.BaseLesson.StartTime, StringFormat='Початок: {0}'}" FontSize="16"/>
+            <!-- Loading indicator -->
+            <ProgressBar Grid.Row="1" 
+                         IsIndeterminate="True" 
+                         Height="5"
+                         Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}"
+                         Margin="0,0,0,10"/>
 
-                    <Separator Margin="0,15"/>
+            <!-- Error message -->
+            <TextBlock Grid.Row="1" 
+                       Text="{Binding ErrorMessage}" 
+                       Foreground="Red" 
+                       TextWrapping="Wrap"
+                       Visibility="{Binding ErrorMessage, Converter={StaticResource EmptyStringToCollapsedConverter}}"
+                       Margin="0,0,0,10"/>
 
-                    <TextBlock Text="{Binding Lesson.Duration, StringFormat='Тривалість: {0:hh\\:mm}'}" 
-                   FontSize="18" FontWeight="Bold" Foreground="Green"/>
+            <!-- Title -->
+            <TextBlock Grid.Row="2" 
+                       Text="Редагування заняття" 
+                       FontSize="24" 
+                       FontWeight="Bold" 
+                       Margin="0,0,0,20" 
+                       Foreground="#2D3E50"/>
+
+            <!-- Edit form -->
+            <StackPanel Grid.Row="3" Margin="0">
+                <!-- Topic -->
+                <TextBlock Text="Тема:" FontSize="14" FontWeight="Bold"/>
+                <TextBox Text="{Binding Topic, UpdateSourceTrigger=PropertyChanged}" 
+                         Padding="10" 
+                         Margin="0,5,0,10"
+                         FontSize="16"/>
+
+                <!-- Date -->
+                <TextBlock Text="Дата:" FontSize="14" FontWeight="Bold"/>
+                <TextBox Text="{Binding Date, StringFormat='dd.MM.yyyy', UpdateSourceTrigger=PropertyChanged}" 
+                         Padding="10" 
+                         Margin="0,5,0,10"
+                         FontSize="16"/>
+
+                <!-- Type -->
+                <TextBlock Text="Тип заняття:" FontSize="14" FontWeight="Bold"/>
+                <ComboBox ItemsSource="{Binding Source={x:Static local:EnumHelperLesson.LessonTypes}}" 
+                          SelectedItem="{Binding Type}"
+                          Padding="10" 
+                          Margin="0,5,0,10"
+                          FontSize="16"/>
+
+                <!-- Start Time -->
+                <TextBlock Text="Час початку:" FontSize="14" FontWeight="Bold"/>
+                <TextBox Text="{Binding StartTime, StringFormat='HH:mm', UpdateSourceTrigger=PropertyChanged}" 
+                         Padding="10" 
+                         Margin="0,5,0,10"
+                         FontSize="16"/>
+
+                <!-- End Time -->
+                <TextBlock Text="Час закінчення:" FontSize="14" FontWeight="Bold"/>
+                <TextBox Text="{Binding EndTime, StringFormat='HH:mm', UpdateSourceTrigger=PropertyChanged}" 
+                         Padding="10" 
+                         Margin="0,5,0,20"
+                         FontSize="16"/>
+
+                <!-- Buttons -->
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
+                    <Button Content="Зберегти зміни" 
+                            Command="{Binding SaveChangesCommand}"
+                            Padding="10,8" 
+                            Background="#3498DB" 
+                            Foreground="White"
+                            Margin="0,0,10,0"/>
                 </StackPanel>
-            </Border>
-        </StackPanel>
-    </Grid>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
 </Page>

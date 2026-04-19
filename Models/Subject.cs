@@ -8,10 +8,15 @@ namespace LessonManager.Models;
 
 public class Subject
 {
-    public int Id { get; }
+    public int Id { get; set; }
     public string Title { get; set; }
     public double EctsCredits { get; set; }
     public KnowledgeArea Area { get; set; }
+
+    [System.Text.Json.Serialization.JsonConstructor]
+    public Subject()
+    {
+    }
 
     public Subject(int id, string title, double ectsCredits, KnowledgeArea area)
     {

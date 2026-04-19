@@ -5,18 +5,95 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:LessonManager.WPF"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="600" d:DesignWidth="800"
       Title="SubjectsListPage">
 
     <Grid Margin="20">
-        <StackPanel>
-            <TextBlock Text="Навчальні предмети" FontSize="26" FontWeight="Bold" Margin="0,0,0,20" Foreground="#2D3E50"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
-            <ListBox x:Name="SubjectsList" 
-         ItemsSource="{Binding Subjects}" 
-         DisplayMemberPath="BaseSubject.Title" 
-         SelectionChanged="SubjectsList_SelectionChanged"
-         FontSize="18" Height="300"/>
+        <!-- Title -->
+        <TextBlock Grid.Row="0" Text="Навчальні предмети" FontSize="26" FontWeight="Bold" Margin="0,0,0,20" Foreground="#2D3E50"/>
+
+        <!-- Loading indicator -->
+        <ProgressBar Grid.Row="1" 
+                     IsIndeterminate="True" 
+                     Height="5"
+                     Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}"
+                     Margin="0,0,0,10"/>
+
+        <!-- Error message -->
+        <TextBlock Grid.Row="1" 
+                   Text="{Binding ErrorMessage}" 
+                   Foreground="Red" 
+                   TextWrapping="Wrap"
+                   Visibility="{Binding ErrorMessage, Converter={StaticResource EmptyStringToCollapsedConverter}}"
+                   Margin="0,0,0,10"/>
+
+        <!-- ListBox -->
+        <ListBox Grid.Row="2" 
+                 x:Name="SubjectsList" 
+                 ItemsSource="{Binding Subjects}" 
+                 SelectedItem="{Binding SelectedSubject}"
+                 FontSize="18" 
+                 Margin="0,0,0,10">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="{Binding BaseSubject.Title}" FontSize="16"/>
+                        <TextBlock Grid.Column="1" Text="{Binding BaseSubject.EctsCredits, StringFormat='0 ECTS'}" FontSize="14" Foreground="Gray"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <!-- Buttons -->
+        <StackPanel Grid.Row="3" Orientation="Vertical">
+            <!-- Filter and Sort Controls -->
+            <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,10">
+                <TextBlock Text="Пошук за назвою:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                <TextBox Width="150" Text="{Binding SubjectNameFilter, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,10,0"/>
+                <TextBlock Text="Сортування:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                <ComboBox Width="120" SelectedValue="{Binding SubjectSortOption, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Content">
+                    <ComboBoxItem Content="Name"/>
+                    <ComboBoxItem Content="Credits"/>
+                </ComboBox>
+                <Button Content="Очистити" Margin="10,0,0,0" Padding="5,2" Command="{Binding ClearSubjectFiltersCommand}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Перегляд" 
+                        Click="ViewButton_Click"
+                        Padding="10,5" 
+                        Background="#3498DB" 
+                        Foreground="White"
+                        IsEnabled="{Binding SelectedSubject, Converter={StaticResource NullToBooleanConverter}}"
+                        Margin="0,0,10,0"/>
+                <Button Content="Додати" 
+                        Command="{Binding AddSubjectCommand}"
+                        Padding="10,5" 
+                        Background="#27AE60" 
+                        Foreground="White"
+                        Margin="0,0,10,0"/>
+                <Button Content="Видалити" 
+                        Command="{Binding DeleteSubjectCommand}"
+                        Padding="10,5" 
+                        Background="#E74C3C" 
+                        Foreground="White"
+                        Margin="0,0,10,0"/>
+                <Button Content="Оновити" 
+                        Command="{Binding LoadSubjectsCommand}"
+                        Padding="10,5" 
+                        Background="#95A5A6" 
+                        Foreground="White"/>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </Page>

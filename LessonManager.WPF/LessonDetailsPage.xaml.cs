@@ -1,36 +1,35 @@
-﻿using LessonManager.Models;
+﻿using LessonManager.Models.Enums;
+using LessonManager.Services;
 using LessonManager.ViewModels;
 using LessonManager.Views;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
+using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
-namespace LessonManager.WPF
+namespace LessonManager.WPF;
+
+public partial class LessonDetailsPage : Page
 {
-
-    public partial class LessonDetailsPage : Page
+    public LessonDetailsPage(LessonView lessonView)
     {
-        public LessonDetailsPage(LessonView lessonView)
-        {
-            InitializeComponent();
-            DataContext = new LessonDetailsViewModel(lessonView);
-        }
+        InitializeComponent();
+        var dataService = App.ServiceProvider.GetRequiredService<IDataService>();
+        var viewModel = new LessonDetailsViewModel(dataService, lessonView);
+        DataContext = viewModel;
 
-
-        private void Back_Click(object sender, RoutedEventArgs e)
+        viewModel.LessonDeleted += (s, e) =>
         {
-            NavigationService.GoBack();
-        }
+            NavigationService?.GoBack();
+        };
     }
+
+    private void Back_Click(object sender, RoutedEventArgs e)
+    {
+        NavigationService.GoBack();
+    }
+}
+
+public static class EnumHelperLesson
+{
+    public static Array LessonTypes => Enum.GetValues(typeof(LessonType));
 }

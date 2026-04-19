@@ -21,15 +21,19 @@ namespace LessonManager.WPF
 
         private void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<ISubjectRepository, MockSubjectRepository>();
-            services.AddSingleton<ILessonRepository, MockLessonRepository>();
+            // Repositories - Singleton to share storage context
+            services.AddSingleton<ISubjectRepository, SubjectRepository>();
+            services.AddSingleton<ILessonRepository, LessonRepository>();
 
+            // Services
             services.AddSingleton<IDataService, DataService>();
 
+            // ViewModels
             services.AddTransient<SubjectsListViewModel>();
             services.AddTransient<SubjectDetailsViewModel>();
             services.AddTransient<LessonDetailsViewModel>();
 
+            // UI
             services.AddSingleton<MainWindow>();
         }
 
